@@ -1,6 +1,3 @@
-import { Patience } from "../decorators/Patience"
-
-@Patience.ES
 class EventSystem extends Object {
     constructor() { super() }
 
