@@ -1,19 +1,24 @@
 {
-  "compilerOptions": {
-    "module": "commonjs",
-    "declaration": false,
-    "removeComments": true,
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "allowSyntheticDefaultImports": true,
-    "target": "ESNext",
-    "sourceMap": false,
-    "outDir": "./dist",
-    "rootDir": "./src",
-    "baseUrl": "./",
-    "incremental": false
-  },
-  "include": [
-    "./src/**/*.ts"
-  ]
+    "compilerOptions": {
+        "target": "esnext",
+        "module": "ESNext",
+        "moduleResolution": "node",
+        "importHelpers": true,
+        "experimentalDecorators": true,
+        "allowSyntheticDefaultImports": true,
+        "sourceMap": true,
+        "outDir": "./Dev",
+        "rootDir": "Src",
+        "baseUrl": "./",
+        "strict": true,
+        "paths": {
+            "@/*": ["Src/*"]
+        }
+    },
+    "include": ["Src/**/*.ts"],
+    "ts-node": {
+        "compilerOptions": {
+            "module": "CommonJS"
+        }
+    }
 }
