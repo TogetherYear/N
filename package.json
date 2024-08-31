@@ -5,14 +5,15 @@
     "license": "MIT",
     "scripts": {
         "dev": "nodemon Src/index.ts",
-        "build": "node -r ts-node/register Build production"
+        "build": "node -r ts-node/register Build production",
+        "exe": "node Build/bundle.js"
     },
     "devDependencies": {
+        "@rollup/plugin-alias": "^5.1.0",
         "@rollup/plugin-commonjs": "^26.0.1",
         "@rollup/plugin-json": "^6.1.0",
         "@rollup/plugin-node-resolve": "^15.2.3",
         "@rollup/plugin-typescript": "^11.1.6",
-        "@types/express": "^4.17.21",
         "@types/node": "^22.5.1",
         "nodemon": "^3.1.4",
         "prettier": "^3.3.3",
@@ -22,7 +23,6 @@
         "typescript": "^5.5.4"
     },
     "dependencies": {
-        "express": "^4.19.2",
         "hmc-win32": "^1.4.92"
     }
 }

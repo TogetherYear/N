@@ -4,6 +4,8 @@ import commonjs from '@rollup/plugin-commonjs';
 import typescript from '@rollup/plugin-typescript';
 import esbuild from 'rollup-plugin-esbuild';
 import json from '@rollup/plugin-json';
+import alias from '@rollup/plugin-alias';
+import { join } from 'path';
 
 const boundEnv = process.argv.slice(-1)[0];
 
@@ -15,7 +17,16 @@ function ConfigFactory() {
             format: 'cjs',
             sourcemap: true
         },
-        plugins: [nodeResolve(), commonjs(), json(), typescript(), esbuild({ minify: true, target: 'node20' })],
+        plugins: [
+            nodeResolve(),
+            commonjs(),
+            json(),
+            typescript({ module: 'esnext' }),
+            esbuild({ minify: true, target: 'node20' }),
+            alias({
+                entries: [{ find: '@', replacement: join(__dirname, 'Src') }]
+            })
+        ],
         external: ['hmc-win32']
     };
     return options;

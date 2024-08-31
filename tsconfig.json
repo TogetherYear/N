@@ -2,15 +2,13 @@
     "compilerOptions": {
         "target": "esnext",
         "module": "ESNext",
-        "moduleResolution": "node",
-        "importHelpers": true,
+        "declaration": false,
         "experimentalDecorators": true,
         "allowSyntheticDefaultImports": true,
+        "moduleResolution": "node",
         "sourceMap": true,
-        "outDir": "./Dev",
         "rootDir": "Src",
         "baseUrl": "./",
-        "strict": true,
         "paths": {
             "@/*": ["Src/*"]
         }
