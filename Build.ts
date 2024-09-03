@@ -15,13 +15,13 @@ function ConfigFactory() {
         output: {
             file: 'Build/bundle.js',
             format: 'cjs',
-            sourcemap: true
+            sourcemap: false
         },
         plugins: [
             nodeResolve(),
             commonjs(),
             json(),
-            typescript({ module: 'esnext' }),
+            typescript({ sourceMap: false, module: 'esnext' }),
             esbuild({ minify: true, target: 'node20' }),
             alias({
                 entries: [{ find: '@', replacement: join(__dirname, 'Src') }]
