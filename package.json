@@ -5,7 +5,7 @@
     "license": "MIT",
     "scripts": {
         "dev": "nodemon Src/index.ts",
-        "build": "rimraf Build && node -r ts-node/register Build production",
+        "build": "rimraf Build && ts-node Build production",
         "exe": "node Build/bundle.js"
     },
     "devDependencies": {
