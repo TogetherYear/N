@@ -1,3 +1,5 @@
-import * as HMC from 'hmc-win32';
+import { EventSystem } from './Core/EventSystem';
 
-console.log(HMC);
+const a = new EventSystem();
+
+console.log(a);

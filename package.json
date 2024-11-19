@@ -5,7 +5,7 @@
     "license": "MIT",
     "scripts": {
         "dev": "nodemon Src/index.ts",
-        "build": "rimraf Build && ts-node Build production",
+        "build": "rimraf Build && ts-node Build",
         "exe": "node Build/bundle.js"
     },
     "devDependencies": {
@@ -22,8 +22,5 @@
         "ts-node": "^10.9.2",
         "tslib": "^2.7.0",
         "typescript": "^5.5.4"
-    },
-    "dependencies": {
-        "hmc-win32": "^1.4.92"
     }
 }
