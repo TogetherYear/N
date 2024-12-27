@@ -1,5 +1,1 @@
-import { EventSystem } from './Core/EventSystem';
-
-const a = new EventSystem();
-
-console.log(a);
+import './Core/Server';
