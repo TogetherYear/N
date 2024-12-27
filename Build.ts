@@ -5,6 +5,7 @@ import typescript from '@rollup/plugin-typescript';
 import esbuild from 'rollup-plugin-esbuild';
 import json from '@rollup/plugin-json';
 import alias from '@rollup/plugin-alias';
+import { builtinModules } from 'module';
 import { join } from 'path';
 
 const name = '[Build.ts]';
@@ -28,7 +29,7 @@ function Bundle() {
                     entries: [{ find: '@', replacement: join(__dirname, 'Src') }]
                 })
             ],
-            external: []
+            external: [...builtinModules.filter((x) => !/^_|^(internal|v8|node-inspect)\/|\//.test(x))]
         };
         rollup(options)
             .then(async (build) => {
