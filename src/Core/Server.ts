@@ -1,6 +1,7 @@
 import express from 'express';
 import * as H from 'http';
 import * as core from 'express-serve-static-core';
+import * as P from 'path';
 
 /**
  * 本地服务器
@@ -49,7 +50,7 @@ class Server {
     }
 
     private SetStaticFile() {
-        this.app.use('/Static', express.static('D:/Web/LocalServer/Resources'));
+        this.app.use('/Static', express.static(P.join(__dirname, '../Resources')));
     }
 }
 
