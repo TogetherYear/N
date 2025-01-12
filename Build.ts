@@ -9,6 +9,7 @@ import { builtinModules } from 'module';
 import { join } from 'path';
 import { fork, ChildProcess } from 'child_process';
 import { copy } from 'fs-extra';
+import asar from '@electron/asar';
 
 const name = '[Build.ts]';
 
@@ -63,6 +64,10 @@ if (boundEnv === 'development') {
                         return;
                     }
                     console.log('资源打包完成');
+                    if (boundEnv === 'asar') {
+                        asar.createPackage(join(__dirname, '/Build'), join(__dirname, '/Build.asar'));
+                        console.log('资源asar完成');
+                    }
                 });
             });
         })
