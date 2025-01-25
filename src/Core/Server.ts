@@ -47,8 +47,8 @@ class Server {
             res.write('Empty');
             res.end();
         });
-        this.app.get('/Test', (req, res) => {
-            res.write('Test');
+        this.app.get('/test', (req, res) => {
+            res.write('test');
             res.end();
         });
     }
