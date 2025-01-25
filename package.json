@@ -7,7 +7,7 @@
         "dev": "ts-node Build development",
         "build": "rimraf Build && ts-node Build production",
         "asar": "rimraf Build && ts-node Build asar",
-        "exe": "node Build/bundle.js"
+        "exe": "node Build/Source/bundle.js"
     },
     "devDependencies": {
         "@electron/asar": "^3.2.18",
