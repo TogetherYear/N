@@ -4,13 +4,10 @@
     "main": "index.js",
     "license": "MIT",
     "scripts": {
-        "dev": "ts-node Build development",
-        "build": "rimraf Build && ts-node Build production",
-        "asar": "rimraf Build && ts-node Build asar",
-        "exe": "node Build/Source/bundle.js"
+        "start": "ts-node Build development",
+        "build": "rimraf Build && ts-node Build production"
     },
     "devDependencies": {
-        "@electron/asar": "^3.2.18",
         "@rollup/plugin-alias": "^5.1.1",
         "@rollup/plugin-commonjs": "^28.0.2",
         "@rollup/plugin-json": "^6.1.0",

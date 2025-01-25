@@ -43,6 +43,10 @@ class Server {
     }
 
     private SetHttpServer() {
+        this.app.get('/', (req, res) => {
+            res.write('Empty');
+            res.end();
+        });
         this.app.get('/Test', (req, res) => {
             res.write('Test');
             res.end();
@@ -50,7 +54,7 @@ class Server {
     }
 
     private SetStaticFile() {
-        this.app.use('/Static', express.static(P.join(__dirname, '../Resources')));
+        this.app.use('/Static', express.static(P.join(__dirname, `${process.env.NODE_ENV === 'development' ? '../../Resources' : '../Resources'}`)));
     }
 }
 

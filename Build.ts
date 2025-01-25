@@ -6,21 +6,41 @@ import esbuild from 'rollup-plugin-esbuild';
 import json from '@rollup/plugin-json';
 import alias from '@rollup/plugin-alias';
 import { builtinModules } from 'module';
-import { join } from 'path';
+import { join, relative } from 'path';
 import { fork, ChildProcess } from 'child_process';
+import * as fs from 'fs';
 import { copy } from 'fs-extra';
-import asar from '@electron/asar';
 
 const name = '[Build.ts]';
 
 const boundEnv = process.argv.slice(-1)[0];
 
+const GetInputFiles = (dir: string): Record<string, string> => {
+    const files: string[] = fs.readdirSync(dir);
+    const inputFiles: Record<string, string> = {};
+    files.forEach((file) => {
+        const fullPath: string = join(dir, file);
+        const stat = fs.statSync(fullPath);
+        if (stat.isDirectory()) {
+            Object.assign(inputFiles, GetInputFiles(fullPath));
+        } else if (file.endsWith('.ts')) {
+            const relativePath: string = relative('Src', fullPath);
+            inputFiles[relativePath] = fullPath;
+        }
+    });
+    return inputFiles;
+};
+
 const options: RollupOptions = {
-    input: join(__dirname, '/Src/index.ts'),
+    input: GetInputFiles(join(__dirname, 'Src')),
     output: {
-        file: join(__dirname, boundEnv === 'development' ? '/Build/bundle.js' : '/Build/Source/bundle.js'),
+        dir: join(__dirname, '/Build'),
         format: 'commonjs',
-        sourcemap: false
+        sourcemap: false,
+        entryFileNames: (chunkInfo) => {
+            const { name } = chunkInfo;
+            return `${name.replace('.ts', '.js')}`;
+        }
     },
     plugins: [
         nodeResolve(),
@@ -44,7 +64,7 @@ if (boundEnv === 'development') {
     watcher.on('event', (ev) => {
         if (ev.code === 'END') {
             if (child) child.kill();
-            child = fork(join(__dirname, './Build/bundle.js'), [], {
+            child = fork(join(__dirname, './Build/index.js'), [], {
                 stdio: 'inherit',
                 env: Object.assign(process.env, { NODE_ENV: boundEnv })
             });
@@ -57,17 +77,12 @@ if (boundEnv === 'development') {
         .then(async (build) => {
             build.write(options.output as OutputOptions).then(() => {
                 console.log('代码打包完成');
-                console.log('开始打包资源');
                 copy(join(__dirname, './Resources'), join(__dirname, '/Build/Resources'), (err) => {
                     if (err) {
                         console.log(err);
                         return;
                     }
                     console.log('资源打包完成');
-                    if (boundEnv === 'asar') {
-                        asar.createPackage(join(__dirname, '/Build'), join(__dirname, '/Build.asar'));
-                        console.log('资源asar完成');
-                    }
                 });
             });
         })
