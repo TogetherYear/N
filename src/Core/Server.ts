@@ -54,7 +54,7 @@ class Server {
     }
 
     private SetStaticFile() {
-        this.app.use('/Static', express.static(P.join(__dirname, `${process.env.NODE_ENV === 'development' ? '../../Resources' : '../Resources'}`)));
+        this.app.use('/static', express.static(P.join(__dirname, `${process.env.NODE_ENV === 'development' ? '../../Resources' : '../Resources'}`)));
     }
 }
 
