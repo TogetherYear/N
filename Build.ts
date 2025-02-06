@@ -77,13 +77,6 @@ if (boundEnv === 'development') {
         .then(async (build) => {
             build.write(options.output as OutputOptions).then(() => {
                 console.log('代码打包完成');
-                copy(join(__dirname, './Resources'), join(__dirname, '/Build/Resources'), (err) => {
-                    if (err) {
-                        console.log(err);
-                        return;
-                    }
-                    console.log('资源打包完成');
-                });
             });
         })
         .catch((error) => {
