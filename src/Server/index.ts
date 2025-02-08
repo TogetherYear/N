@@ -1,5 +1,5 @@
 import { LocalServer } from './Manager/LocalServer';
-import { Update } from './Route/Update';
+import { Test } from './Route/Test';
 import { S } from './type';
 
 const Generate = (): Promise<S.Context> => {
@@ -23,7 +23,7 @@ const Generate = (): Promise<S.Context> => {
     return new Promise(async (resolve, reject) => {
         ctx.LocalServer = new LocalServer(ctx);
 
-        ctx.LocalServer.MountRoute(new Update(ctx));
+        ctx.LocalServer.MountRoute(new Test(ctx));
 
         ctx.LocalServer.Run();
 

@@ -4,7 +4,8 @@
     "main": "index.js",
     "license": "MIT",
     "scripts": {
-        "start": "ts-node Build development",
+        "dev": "ts-node Build development",
+        "start": "node Build/index.js",
         "build": "rimraf Build && ts-node Build production"
     },
     "devDependencies": {

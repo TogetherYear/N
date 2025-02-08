@@ -3,8 +3,10 @@ import express from 'express';
 
 namespace TRoute {
     export const enum Methon {
-        Get,
-        Post
+        Get = 'get',
+        Post = 'post',
+        Put = 'put',
+        Delete = 'delete'
     }
 
     export type Request = express.Request;
@@ -27,46 +29,57 @@ namespace TRoute {
                         methon: Methon;
                     }>;
                     for (let e of mount) {
-                        if (e.methon === Methon.Get) {
-                            this.ctx.LocalServer.app.get(e.path, (req, res, next) => {
-                                try {
-                                    //@ts-ignore
-                                    this[`${e.funcName}`](req, res);
-                                } catch (error) {
-                                    next(error);
-                                }
-                            });
-                        } else if (e.methon === Methon.Post) {
-                            this.ctx.LocalServer.app.post(e.path, (req, res, next) => {
-                                try {
-                                    //@ts-ignore
-                                    this[`${e.funcName}`](req, res);
-                                } catch (error) {
-                                    next(error);
-                                }
-                            });
-                        }
+                        this.ctx.LocalServer.app[e.methon](e.path, (req, res, next) => {
+                            try {
+                                //@ts-ignore
+                                this[`${e.funcName}`](req, res);
+                            } catch (error) {
+                                next(error);
+                            }
+                        });
                     }
                 }
             };
         };
     }
 
-    export function Mount(methon: Methon, path: string) {
+    export function Post(path: string) {
         return function (target: Object, propertyKey: string | symbol, descriptor: PropertyDescriptor) {
-            //@ts-ignore
-            if (target['tRoute_Mount_Need']) {
-                //@ts-ignore
-                target['tRoute_Mount_Need'].push({
-                    funcName: propertyKey,
-                    path,
-                    methon
-                });
-            } else {
-                //@ts-ignore
-                target['tRoute_Mount_Need'] = [{ path, funcName: propertyKey, methon }];
-            }
+            Mount(target, propertyKey, path, Methon.Post);
         };
+    }
+
+    export function Get(path: string) {
+        return function (target: Object, propertyKey: string | symbol, descriptor: PropertyDescriptor) {
+            Mount(target, propertyKey, path, Methon.Get);
+        };
+    }
+
+    export function Put(path: string) {
+        return function (target: Object, propertyKey: string | symbol, descriptor: PropertyDescriptor) {
+            Mount(target, propertyKey, path, Methon.Put);
+        };
+    }
+
+    export function Delete(path: string) {
+        return function (target: Object, propertyKey: string | symbol, descriptor: PropertyDescriptor) {
+            Mount(target, propertyKey, path, Methon.Delete);
+        };
+    }
+
+    function Mount(target: Object, propertyKey: string | symbol, path: string, methon: Methon) {
+        //@ts-ignore
+        if (target['tRoute_Mount_Need']) {
+            //@ts-ignore
+            target['tRoute_Mount_Need'].push({
+                funcName: propertyKey,
+                path,
+                methon
+            });
+        } else {
+            //@ts-ignore
+            target['tRoute_Mount_Need'] = [{ path, funcName: propertyKey, methon }];
+        }
     }
 }
 
