@@ -19,11 +19,7 @@ const options: RollupOptions = {
     output: {
         file: join(__dirname, '/Build/index.js'),
         format: 'commonjs',
-        sourcemap: false,
-        entryFileNames: (chunkInfo) => {
-            const { name } = chunkInfo;
-            return `${name.replace('.ts', '.js')}`;
-        }
+        sourcemap: false
     },
     plugins: [
         nodeResolve(),
