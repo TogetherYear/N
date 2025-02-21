@@ -6,35 +6,18 @@ import esbuild from 'rollup-plugin-esbuild';
 import json from '@rollup/plugin-json';
 import alias from '@rollup/plugin-alias';
 import { builtinModules } from 'module';
-import { join, relative } from 'path';
+import { join } from 'path';
 import { fork, ChildProcess } from 'child_process';
-import * as fs from 'fs';
 import { copy } from 'fs-extra';
 
 const name = '[Build.ts]';
 
 const boundEnv = process.argv.slice(-1)[0];
 
-const GetInputFiles = (dir: string): Record<string, string> => {
-    const files: string[] = fs.readdirSync(dir);
-    const inputFiles: Record<string, string> = {};
-    files.forEach((file) => {
-        const fullPath: string = join(dir, file);
-        const stat = fs.statSync(fullPath);
-        if (stat.isDirectory()) {
-            Object.assign(inputFiles, GetInputFiles(fullPath));
-        } else if (file.endsWith('.ts')) {
-            const relativePath: string = relative('Src', fullPath);
-            inputFiles[relativePath] = fullPath;
-        }
-    });
-    return inputFiles;
-};
-
 const options: RollupOptions = {
-    input: GetInputFiles(join(__dirname, 'Src')),
+    input: join(__dirname, '/Src/index.ts'),
     output: {
-        dir: join(__dirname, '/Build'),
+        file: join(__dirname, '/Build/index.js'),
         format: 'commonjs',
         sourcemap: false,
         entryFileNames: (chunkInfo) => {
