@@ -17,7 +17,7 @@ const boundEnv = process.argv.slice(-1)[0];
 const options: RollupOptions = {
     input: join(__dirname, '/Src/index.ts'),
     output: {
-        file: join(__dirname, '/Build/index.js'),
+        file: join(__dirname, '/Build/index.cjs'),
         format: 'commonjs',
         sourcemap: false
     },
@@ -43,7 +43,7 @@ if (boundEnv === 'development') {
     watcher.on('event', (ev) => {
         if (ev.code === 'END') {
             if (child) child.kill();
-            child = fork(join(__dirname, './Build/index.js'), [], {
+            child = fork(join(__dirname, './Build/index.cjs'), [], {
                 stdio: 'inherit',
                 env: Object.assign(process.env, { NODE_ENV: boundEnv })
             });

@@ -1,11 +1,11 @@
 {
     "name": "node-empty",
     "version": "1.0.0",
-    "main": "index.js",
+    "main": "index.cjs",
     "license": "MIT",
     "scripts": {
         "dev": "ts-node Build development",
-        "start": "node Build/index.js",
+        "start": "node Build/index.cjs",
         "build": "rimraf Build && ts-node Build production"
     },
     "devDependencies": {
