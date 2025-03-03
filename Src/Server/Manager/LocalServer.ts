@@ -4,6 +4,7 @@ import * as core from 'express-serve-static-core';
 import { S } from '../type';
 import { Manager } from '../Base/Manager';
 import { Route } from '../Base/Route';
+import { join } from 'path';
 
 /**
  * 本地服务器
@@ -48,6 +49,8 @@ class LocalServer extends Manager {
         this.app.use((err, req, res, next) => {
             res.status(500).json({ error: err.message });
         });
+
+        this.app.use('/', express.static(join(global.staticDir)));
 
         this.server = H.createServer(this.app);
     }

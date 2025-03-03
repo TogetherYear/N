@@ -26,11 +26,6 @@ class Test extends Route {
         res.write('Delete');
         res.end();
     }
-
-    @TRoute.Get('/*')
-    private Static(req: TRoute.Request, res: TRoute.Response) {
-        res.sendFile(join(global.staticDir, `${req.url === '/' ? '/index.html' : req.url}`));
-    }
 }
 
 export { Test };
